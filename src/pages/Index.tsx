@@ -19,6 +19,7 @@ import {
   Star,
   Eye,
 } from "lucide-react";
+import GitHubAuth from "@/components/GitHubAuth";
 
 const Index = () => {
   const projects = [
@@ -111,14 +112,7 @@ const Index = () => {
               >
                 О проектах
               </a>
-              <Button
-                variant="outline"
-                size="sm"
-                className="border-primary/50 hover:bg-primary hover:text-primary-foreground"
-              >
-                <Github className="w-4 h-4 mr-2" />
-                GitHub
-              </Button>
+              <GitHubAuth />
             </nav>
           </div>
         </div>

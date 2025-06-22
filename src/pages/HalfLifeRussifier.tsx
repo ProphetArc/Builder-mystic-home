@@ -28,22 +28,18 @@ import {
   Volume2,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import GitHubAuth from "@/components/GitHubAuth";
+import GitHubComments from "@/components/GitHubComments";
+import DownloadStats from "@/components/DownloadStats";
 
 const HalfLifeRussifier = () => {
-  const projectStats = {
-    downloads: 18750,
-    stars: 142,
-    watchers: 89,
-    lastUpdate: "15 ноября 2024",
-  };
-
   const changelog = [
     {
       version: "2.1.0",
       date: "15 ноября 2024",
       changes: [
         "Добавлены русские субтитры для всех роликов",
-        "Исправлены ошибки в переводе научного персонала",
+        "Исправлены ошибки в переводе научно��о персонала",
         "Обновлены звуковые файлы ГЛАДОСа на русском языке",
         "Улучшена синхронизация губ для русской речи",
       ],
@@ -69,41 +65,11 @@ const HalfLifeRussifier = () => {
     },
   ];
 
-  const comments = [
-    {
-      id: 1,
-      author: "Гордон",
-      avatar: "Г",
-      date: "2 дня назад",
-      content:
-        "Отличный русификатор! Наконец-то можно нормально играть на родном языке. Перевод качественный, звук синхронизирован.",
-      rating: 5,
-    },
-    {
-      id: 2,
-      author: "АлександрМ",
-      avatar: "А",
-      date: "1 неделю назад",
-      content:
-        "Спасибо за проделанную работу! Особенно впечатлили русские субтитры - теперь все понятно без знания английского.",
-      rating: 5,
-    },
-    {
-      id: 3,
-      author: "BlackMesa_Fan",
-      avatar: "B",
-      date: "2 недели назад",
-      content:
-        "Есть небольшие проблемы с установкой на Steam версию, но в целом все работает отлично. Жду обновления!",
-      rating: 4,
-    },
-  ];
-
   const features = [
     {
       icon: Languages,
       title: "Полная локализация",
-      description: "Переведены все тексты интерфейса, диалоги и субтитры",
+      description: "Перевед��ны все тексты интерфейса, диалоги и субтитры",
     },
     {
       icon: Volume2,
@@ -154,21 +120,24 @@ const HalfLifeRussifier = () => {
               <div className="flex items-center space-x-4 text-sm text-muted-foreground">
                 <div className="flex items-center space-x-1">
                   <Download className="w-4 h-4" />
-                  <span>{projectStats.downloads.toLocaleString()}</span>
+                  <span>Статистика из GitHub</span>
                 </div>
                 <div className="flex items-center space-x-1">
                   <Star className="w-4 h-4" />
-                  <span>{projectStats.stars}</span>
+                  <span>Реальные данные</span>
                 </div>
                 <div className="flex items-center space-x-1">
                   <Eye className="w-4 h-4" />
-                  <span>{projectStats.watchers}</span>
+                  <span>API интеграция</span>
                 </div>
               </div>
-              <Button className="gaming-glow">
-                <Download className="w-4 h-4 mr-2" />
-                Скачать
-              </Button>
+              <div className="flex items-center space-x-3">
+                <GitHubAuth />
+                <Button className="gaming-glow">
+                  <Download className="w-4 h-4 mr-2" />
+                  Скачать
+                </Button>
+              </div>
             </div>
           </div>
         </div>
@@ -213,7 +182,7 @@ const HalfLifeRussifier = () => {
                 <div className="flex items-center justify-between text-sm text-muted-foreground">
                   <div className="flex items-center space-x-1">
                     <Calendar className="w-4 h-4" />
-                    <span>Обновлено: {projectStats.lastUpdate}</span>
+                    <span>Обновлено: автоматически из GitHub</span>
                   </div>
                   <div className="flex items-center space-x-4">
                     <span>Размер: 245 МБ</span>
@@ -250,7 +219,7 @@ const HalfLifeRussifier = () => {
                         Русификатор Half-Life - это полная локализация
                         легендарной игры на русский язык. Проект включает в себя
                         не только перевод текстов, но и профессиональную русскую
-                        озвучку всех персонажей.
+                        озву��ку всех персонажей.
                       </p>
 
                       <h4>Что переведено:</h4>
@@ -415,6 +384,9 @@ const HalfLifeRussifier = () => {
 
           {/* Sidebar */}
           <div className="space-y-6">
+            {/* Real Download Stats from GitHub */}
+            <DownloadStats />
+
             {/* Download Section */}
             <Card className="project-card group">
               <CardHeader>
@@ -431,76 +403,11 @@ const HalfLifeRussifier = () => {
                 <div className="text-center text-sm text-muted-foreground">
                   <p>245 МБ • Обновлено 15 ноября 2024</p>
                 </div>
-                <Separator />
-                <div className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Загрузки:</span>
-                    <span>{projectStats.downloads.toLocaleString()}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Рейтинг:</span>
-                    <div className="flex items-center space-x-1">
-                      <Star className="w-4 h-4 fill-current text-yellow-500" />
-                      <span>4.9/5</span>
-                    </div>
-                  </div>
-                </div>
               </CardContent>
             </Card>
 
-            {/* Comments Section */}
-            <Card className="project-card group">
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <MessageSquare className="w-5 h-5 mr-2" />
-                  Отзывы ({comments.length})
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {comments.map((comment) => (
-                  <div key={comment.id} className="space-y-2">
-                    <div className="flex items-center space-x-2">
-                      <Avatar className="w-8 h-8">
-                        <AvatarFallback className="text-xs">
-                          {comment.avatar}
-                        </AvatarFallback>
-                      </Avatar>
-                      <div className="flex-1">
-                        <div className="flex items-center space-x-2">
-                          <span className="font-semibold text-sm">
-                            {comment.author}
-                          </span>
-                          <div className="flex">
-                            {[...Array(5)].map((_, i) => (
-                              <Star
-                                key={i}
-                                className={`w-3 h-3 ${
-                                  i < comment.rating
-                                    ? "fill-current text-yellow-500"
-                                    : "text-muted-foreground"
-                                }`}
-                              />
-                            ))}
-                          </div>
-                        </div>
-                        <p className="text-xs text-muted-foreground">
-                          {comment.date}
-                        </p>
-                      </div>
-                    </div>
-                    <p className="text-sm text-muted-foreground">
-                      {comment.content}
-                    </p>
-                    {comment.id < comments.length && (
-                      <Separator className="mt-3" />
-                    )}
-                  </div>
-                ))}
-                <Button variant="outline" size="sm" className="w-full">
-                  Показать больше отзывов
-                </Button>
-              </CardContent>
-            </Card>
+            {/* Real GitHub Comments */}
+            <GitHubComments projectId="half-life-russifier" />
           </div>
         </div>
       </div>
