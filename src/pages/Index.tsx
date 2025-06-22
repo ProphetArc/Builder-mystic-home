@@ -164,7 +164,7 @@ const Index = () => {
           <h2 className="section-title text-center mb-12">Специализация</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {skills.map((skill, index) => (
-              <Card key={index} className="project-card text-center">
+              <Card key={index} className="project-card group text-center">
                 <CardContent className="pt-6">
                   <skill.icon
                     className={`w-12 h-12 mx-auto mb-4 ${skill.color}`}
@@ -192,7 +192,10 @@ const Index = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {projects.map((project) => (
-              <Card key={project.id} className="project-card overflow-hidden">
+              <Card
+                key={project.id}
+                className="project-card group overflow-hidden"
+              >
                 <div className="aspect-video bg-gradient-to-br from-primary/10 to-accent/10 relative overflow-hidden">
                   <div className="absolute inset-0 bg-grid-pattern opacity-10" />
                   <div className="absolute inset-0 flex items-center justify-center">
@@ -264,7 +267,7 @@ const Index = () => {
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="section-title text-4xl mb-8">О проектах</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
-              <Card className="project-card">
+              <Card className="project-card group">
                 <CardHeader>
                   <div className="flex items-center space-x-3 mb-4">
                     <Languages className="w-8 h-8 text-primary" />
@@ -280,7 +283,7 @@ const Index = () => {
                 </CardContent>
               </Card>
 
-              <Card className="project-card">
+              <Card className="project-card group">
                 <CardHeader>
                   <div className="flex items-center space-x-3 mb-4">
                     <Bot className="w-8 h-8 text-accent" />

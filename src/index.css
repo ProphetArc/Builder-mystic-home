@@ -124,7 +124,7 @@
 
 @layer components {
   .project-card {
-    @apply bg-card border border-border rounded-lg p-6 hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:shadow-primary/10 group;
+    @apply bg-card border border-border rounded-lg p-6 hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:shadow-primary/10;
   }
 
   .tech-badge {
