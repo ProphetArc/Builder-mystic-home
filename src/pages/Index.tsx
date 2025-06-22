@@ -24,13 +24,13 @@ const Index = () => {
   const projects = [
     {
       id: 1,
-      title: "CS 1.6 Russian Pack",
+      title: "Русификатор Half-Life",
       description:
-        "Полный русификатор для Counter-Strike 1.6 с переводом интерфейса, меню и звуковых файлов.",
+        "Полный русификатор для Half-Life с переводом всех текстов, субтитров и звуковых файлов. Поддержка всех дополнений.",
       category: "Русификатор",
-      technologies: ["Localization", "Audio", "UI Translation"],
-      downloads: 15420,
-      stars: 89,
+      technologies: ["Localization", "Audio", "Subtitles", "GoldSrc Engine"],
+      downloads: 18750,
+      stars: 142,
       image: "/placeholder.svg",
       type: "russifier",
     },
@@ -246,12 +246,24 @@ const Index = () => {
                     </div>
                   </div>
                   <div className="flex gap-2">
-                    <Button size="sm" className="flex-1">
-                      <Download className="w-4 h-4 mr-2" />
-                      Скачать
+                    <Button size="sm" className="flex-1" asChild>
+                      <a
+                        href={
+                          project.id === 1
+                            ? "/project/half-life-russifier"
+                            : "#"
+                        }
+                      >
+                        {project.id === 1 ? "Подробнее" : "Скачать"}
+                        {project.id === 1 ? (
+                          <ExternalLink className="w-4 h-4 ml-2" />
+                        ) : (
+                          <Download className="w-4 h-4 mr-2" />
+                        )}
+                      </a>
                     </Button>
                     <Button variant="outline" size="sm">
-                      <ExternalLink className="w-4 h-4" />
+                      <Download className="w-4 h-4" />
                     </Button>
                   </div>
                 </CardContent>
