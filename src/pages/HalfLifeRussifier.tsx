@@ -138,18 +138,11 @@ const HalfLifeRussifier = () => {
                   <h1 className="text-base sm:text-lg md:text-xl font-bold text-foreground truncate">
                     Русификатор Half-Life
                   </h1>
-                  <p className="text-xs sm:text-sm text-muted-foreground hidden sm:block">
-                    Версия 2.3 • GoldSrc Engine
-                  </p>
                 </div>
               </div>
             </div>
             <div className="flex items-center space-x-2 sm:space-x-4 flex-shrink-0">
               <GitHubAuth />
-              <Button className="gaming-glow hidden sm:flex" size="sm">
-                <Download className="w-4 h-4 sm:mr-2" />
-                <span className="hidden md:inline">Скачать</span>
-              </Button>
             </div>
           </div>
         </div>
@@ -169,13 +162,16 @@ const HalfLifeRussifier = () => {
                     </CardTitle>
                     <CardDescription className="text-base sm:text-lg mt-2">
                       Полный русификатор для Half-Life с переводом всех текстов,
-                      субтитров и звуковых файлов. Поддержка всех дополнений.
+                      субтитров и звуковых файлов. Поддер��ка всех дополнений.
                     </CardDescription>
                   </div>
                   <div className="flex flex-wrap gap-2 sm:flex-shrink-0">
                     <Badge variant="secondary">Русификатор</Badge>
                     <Badge variant="outline" className="hidden sm:inline-flex">
                       GoldSrc Engine
+                    </Badge>
+                    <Badge variant="outline" className="hidden sm:inline-flex">
+                      Xash3D Engine
                     </Badge>
                   </div>
                 </div>
@@ -216,7 +212,7 @@ const HalfLifeRussifier = () => {
                     <span>Обновлено: 31 июля 2023</span>
                   </div>
                   <div className="flex items-center space-x-3 sm:space-x-4 text-xs sm:text-sm">
-                    <span>Размер: 245 МБ</span>
+                    <span>Размер: 180 МБ</span>
                     <span>Лицензия: Free</span>
                   </div>
                 </div>
@@ -460,7 +456,7 @@ const HalfLifeRussifier = () => {
                   Скачать v2.3
                 </Button>
                 <div className="text-center text-xs sm:text-sm text-muted-foreground">
-                  <p>245 МБ • Обновлено 31 июля 2023</p>
+                  <p>180 МБ • Обновлено 31 июля 2023</p>
                 </div>
               </CardContent>
             </Card>
