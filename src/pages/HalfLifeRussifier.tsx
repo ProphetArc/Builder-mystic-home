@@ -10,7 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
 import GitHubAuth from "@/components/GitHubAuth";
-import GitHubComments from "@/components/GitHubComments";
+import ReviewsSection from "@/components/ReviewsSection";
 import DownloadStats from "@/components/DownloadStats";
 import {
   Download,
@@ -162,7 +162,7 @@ const HalfLifeRussifier = () => {
                     </CardTitle>
                     <CardDescription className="text-base sm:text-lg mt-2">
                       Полный русификатор для Half-Life с переводом всех текстов,
-                      субтитров и звуковых файлов. Поддер��ка всех дополнений.
+                      субтитров и звуковых файлов. Поддержка всех дополнений.
                     </CardDescription>
                   </div>
                   <div className="flex flex-wrap gap-2 sm:flex-shrink-0">
@@ -464,8 +464,8 @@ const HalfLifeRussifier = () => {
             {/* Real Download Stats */}
             <DownloadStats />
 
-            {/* Real GitHub Comments */}
-            <GitHubComments projectId="half-life-russifier" />
+            {/* Reviews Section */}
+            <ReviewsSection projectId="half-life-russifier" />
           </div>
         </div>
       </div>
