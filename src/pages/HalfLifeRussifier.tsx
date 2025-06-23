@@ -131,11 +131,11 @@ const HalfLifeRussifier = () => {
                 </Link>
               </Button>
               <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center gaming-glow">
-                  <Languages className="w-6 h-6 text-white" />
+                <div className="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center gaming-glow">
+                  <Languages className="w-4 h-4 md:w-6 md:h-6 text-white" />
                 </div>
                 <div>
-                  <h1 className="text-xl font-bold text-foreground">
+                  <h1 className="text-lg md:text-xl font-bold text-foreground">
                     Русификатор Half-Life
                   </h1>
                   <p className="text-sm text-muted-foreground hidden md:block">
