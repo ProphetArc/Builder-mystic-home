@@ -63,8 +63,8 @@ const GitHubAuth = () => {
   if (!user) {
     return (
       <Button variant="outline" size="sm" onClick={handleLogin}>
-        <Github className="w-4 h-4 mr-2" />
-        Войти через GitHub
+        <Github className="w-4 h-4 md:mr-2" />
+        <span className="hidden md:inline">Войти через GitHub</span>
       </Button>
     );
   }
