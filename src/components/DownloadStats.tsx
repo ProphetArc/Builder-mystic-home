@@ -10,7 +10,6 @@ interface DownloadStatsProps {
 
 const DownloadStats = ({ className }: DownloadStatsProps) => {
   const [stats, setStats] = useState<ProjectDownloadStats | null>(null);
-  const [starCount, setStarCount] = useState(0);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -19,13 +18,8 @@ const DownloadStats = ({ className }: DownloadStatsProps) => {
 
   const loadStats = async () => {
     try {
-      const [downloadStats, stars] = await Promise.all([
-        githubAPI.getDownloadStats(),
-        githubAPI.getStarCount(),
-      ]);
-
+      const downloadStats = await githubAPI.getDownloadStats();
       setStats(downloadStats);
-      setStarCount(stars);
     } catch (error) {
       console.error("Error loading stats:", error);
     } finally {
@@ -69,21 +63,13 @@ const DownloadStats = ({ className }: DownloadStatsProps) => {
       </CardHeader>
       <CardContent className="space-y-4">
         {/* Основная статистика */}
-        <div className="grid grid-cols-2 gap-4">
-          <div className="text-center p-3 bg-primary/10 rounded-lg">
-            <Download className="w-6 h-6 mx-auto mb-2 text-primary" />
-            <div className="text-2xl font-bold">
+        <div className="grid grid-cols-1 gap-4">
+          <div className="text-center p-4 bg-primary/10 rounded-lg">
+            <Download className="w-8 h-8 mx-auto mb-3 text-primary" />
+            <div className="text-3xl font-bold">
               {stats.totalDownloads.toLocaleString()}
             </div>
             <div className="text-sm text-muted-foreground">Всего загрузок</div>
-          </div>
-
-          <div className="text-center p-3 bg-accent/10 rounded-lg">
-            <Star className="w-6 h-6 mx-auto mb-2 text-accent" />
-            <div className="text-2xl font-bold">
-              {starCount.toLocaleString()}
-            </div>
-            <div className="text-sm text-muted-foreground">Звезд на GitHub</div>
           </div>
         </div>
 
