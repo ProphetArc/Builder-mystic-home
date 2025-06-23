@@ -9,7 +9,9 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import GitHubAuth from "@/components/GitHubAuth";
+import GitHubComments from "@/components/GitHubComments";
+import DownloadStats from "@/components/DownloadStats";
 import {
   Download,
   ArrowLeft,
@@ -18,7 +20,6 @@ import {
   Calendar,
   FileText,
   Image as ImageIcon,
-  MessageSquare,
   CheckCircle,
   AlertCircle,
   Clock,
@@ -28,40 +29,49 @@ import {
   Volume2,
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import GitHubAuth from "@/components/GitHubAuth";
-import GitHubComments from "@/components/GitHubComments";
-import DownloadStats from "@/components/DownloadStats";
 
 const HalfLifeRussifier = () => {
   const changelog = [
     {
-      version: "2.1.0",
-      date: "15 ноября 2024",
+      version: "2.3",
+      date: "31 июля 2023",
       changes: [
-        "Добавлены русские субтитры для всех роликов",
-        "Исправлены ошибки в переводе научно��о персонала",
-        "Обновлены звуковые файлы ГЛАДОСа на русском языке",
-        "Улучшена синхронизация губ для русской речи",
+        "Исправление текстового перевода, добавлен перевод новых строк для Xash3D FWGS 0.20.x/0.21.x",
       ],
     },
     {
-      version: "2.0.5",
-      date: "28 октября 2024",
+      version: "2.2",
+      date: "30 июля 2021",
       changes: [
-        "Исправлен перевод описаний оружия",
-        "Добавлена поддержка дополнения Opposing Force",
-        "Оптимизированы размеры звуковых файлов",
+        "Снова мелкие исправления текста Укорачивание или переиначивание текста чтобы влезал в меню (в настройках персонажа, видео и звука)",
+        'Добавлен перевод новой строчки "Покинуть игру" в gameui_russian.txt которая появилась в обновлении Half-Life 1 build 8684 от 3 августа 2020 года в Steam',
+        "Обновлены картинки с переводом WON/Xash3D меню, также добавил картинки в TGA формате для поддержки бета версии Xash3D FWGS 0.20.1",
       ],
     },
     {
-      version: "2.0.0",
-      date: "10 октября 2024",
+      version: "2.1",
+      date: "18 июля 2020",
       changes: [
-        "Полная переработка интерфейса игры",
-        "Новый перевод всех диалогов с учетом контекста",
-        "Добавлена поддержка Blue Shift",
-        "Исправлены критические ошибки предыдущей версии",
+        "Добавлены некоторые отсутствующие строчки в MainUI, исправления перевода, перенос конфига в папку userconfig.d (чтобы не заменять пользовательский userconfig.cfg)",
       ],
+    },
+    {
+      version: "2.0",
+      date: "31 мая 2020",
+      changes: [
+        "Добавлен перевод MainUI (пояснительный текст возле кнопок меню и всплывающие сообщения)",
+        "Мелкая корректировка текста",
+      ],
+    },
+    {
+      version: "1.1",
+      date: "17 мая 2019",
+      changes: ["Добавлен перевод главного меню и HD озвучка H.E.V костюма"],
+    },
+    {
+      version: "1.0",
+      date: "15 июля 2018",
+      changes: ["Первый релиз русификатора"],
     },
   ];
 
@@ -69,23 +79,41 @@ const HalfLifeRussifier = () => {
     {
       icon: Languages,
       title: "Полная локализация",
-      description: "Перевед��ны все тексты интерфейса, диалоги и субтитры",
+      description: "Переведены все диалоги, тексты и графика интерфейса",
     },
     {
       icon: Volume2,
       title: "Русская озвучка",
-      description: "Профессиональная озвучка всех персонажей на русском языке",
+      description: "Озвучка всех персонажей на русском языке",
     },
     {
-      icon: Monitor,
-      title: "Адаптивный интерфейс",
+      icon: () => (
+        <svg
+          className="w-8 h-8"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M12 4v16" />
+          <path d="M4 7V5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2" />
+          <path d="M9 20h6" />
+        </svg>
+      ),
+      title: "Шрифты с поддержкой кириллицы",
       description:
-        "Интерфейс адаптирован для русского языка без обрезки текста",
+        "Поддержка отображения кириллицы в консоли и внутриигровом чате",
     },
     {
       icon: Gamepad2,
       title: "Совместимость",
-      description: "Поддержка оригинала и всех официальных дополнений",
+      description:
+        "Поддержка WON и Steam версий движка GoldSource, и движка Xash3D FWGS",
     },
   ];
 
@@ -111,33 +139,17 @@ const HalfLifeRussifier = () => {
                     Русификатор Half-Life
                   </h1>
                   <p className="text-sm text-muted-foreground">
-                    Версия 2.1.0 • GoldSrc Engine
+                    Версия 2.3 • GoldSrc Engine
                   </p>
                 </div>
               </div>
             </div>
             <div className="flex items-center space-x-4">
-              <div className="flex items-center space-x-4 text-sm text-muted-foreground">
-                <div className="flex items-center space-x-1">
-                  <Download className="w-4 h-4" />
-                  <span>Статистика из GitHub</span>
-                </div>
-                <div className="flex items-center space-x-1">
-                  <Star className="w-4 h-4" />
-                  <span>Реальные данные</span>
-                </div>
-                <div className="flex items-center space-x-1">
-                  <Eye className="w-4 h-4" />
-                  <span>API интеграция</span>
-                </div>
-              </div>
-              <div className="flex items-center space-x-3">
-                <GitHubAuth />
-                <Button className="gaming-glow">
-                  <Download className="w-4 h-4 mr-2" />
-                  Скачать
-                </Button>
-              </div>
+              <GitHubAuth />
+              <Button className="gaming-glow">
+                <Download className="w-4 h-4 mr-2" />
+                Скачать
+              </Button>
             </div>
           </div>
         </div>
@@ -170,7 +182,13 @@ const HalfLifeRussifier = () => {
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
                   {features.map((feature, index) => (
                     <div key={index} className="text-center">
-                      <feature.icon className="w-8 h-8 mx-auto mb-2 text-primary" />
+                      {typeof feature.icon === "function" ? (
+                        <div className="w-8 h-8 mx-auto mb-2 text-primary">
+                          <feature.icon />
+                        </div>
+                      ) : (
+                        <feature.icon className="w-8 h-8 mx-auto mb-2 text-primary" />
+                      )}
                       <h4 className="font-semibold text-sm">{feature.title}</h4>
                       <p className="text-xs text-muted-foreground mt-1">
                         {feature.description}
@@ -182,7 +200,7 @@ const HalfLifeRussifier = () => {
                 <div className="flex items-center justify-between text-sm text-muted-foreground">
                   <div className="flex items-center space-x-1">
                     <Calendar className="w-4 h-4" />
-                    <span>Обновлено: автоматически из GitHub</span>
+                    <span>Обновлено: 31 июля 2023</span>
                   </div>
                   <div className="flex items-center space-x-4">
                     <span>Размер: 245 МБ</span>
@@ -199,7 +217,27 @@ const HalfLifeRussifier = () => {
                   <FileText className="w-4 h-4 mr-2" />
                   Описание
                 </TabsTrigger>
-                <TabsTrigger value="installation">Установка</TabsTrigger>
+                <TabsTrigger value="installation">
+                  <svg
+                    className="w-4 h-4 mr-2"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M12 2v8" />
+                    <path d="m16 6-4 4-4-4" />
+                    <rect width="20" height="8" x="2" y="14" rx="2" />
+                    <path d="M6 18h.01" />
+                    <path d="M10 18h.01" />
+                  </svg>
+                  Установка
+                </TabsTrigger>
                 <TabsTrigger value="screenshots">
                   <ImageIcon className="w-4 h-4 mr-2" />
                   Скриншоты
@@ -214,44 +252,34 @@ const HalfLifeRussifier = () => {
                 <Card className="project-card group">
                   <CardContent className="pt-6">
                     <div className="prose prose-invert max-w-none">
-                      <h3>О проекте</h3>
-                      <p>
-                        Русификатор Half-Life - это полная локализация
-                        легендарной игры на русский язык. Проект включает в себя
-                        не только перевод текстов, но и профессиональную русскую
-                        озву��ку всех персонажей.
-                      </p>
-
-                      <h4>Что переведено:</h4>
+                      <h4>Авторы:</h4>
                       <ul>
-                        <li>Все меню и интерфейс игры</li>
-                        <li>Диалоги и реплики персонажей</li>
-                        <li>Субтитры для всех роликов</li>
-                        <li>Описания оружия и предметов</li>
-                        <li>Заставки и титры</li>
-                        <li>Сообщения системы</li>
+                        <li>Русификатор текста: $_Vladislav</li>
+                        <li>
+                          Русификатор озвучки: «XXI век», Triada Games, Buka
+                          Entertainment, 7Wolf, Fargus и Kudos.
+                        </li>
+                        <li>Озвучка солдатов: Пётр Бойко</li>
+                        <li>
+                          Озвучка оповещений Чёрной Мезы: Евгений Синельников
+                        </li>
+                        <li>
+                          Русификатор главного меню для Xash3D (WON-Style):
+                          Владислав Сухов ($_Vladislav)
+                        </li>
+                        <li>
+                          Озвучка H.E.V костюма в HD качестве: Buka
+                          Entertainment
+                        </li>
+                        <li>Русификатор MainUI Xash3D: $_Vladislav</li>
                       </ul>
 
-                      <h4>Особенности:</h4>
+                      <h4>В него входит:</h4>
                       <ul>
-                        <li>
-                          Профессиональная озвучка с учетом оригинальной
-                          интонации
-                        </li>
-                        <li>Синхронизация губ для русской речи</li>
-                        <li>Адаптация интерфейса под длинные русские фразы</li>
-                        <li>
-                          Поддержка дополнений Opposing Force и Blue Shift
-                        </li>
-                        <li>Совместимость с модами</li>
-                      </ul>
-
-                      <h4>Технические требования:</h4>
-                      <ul>
-                        <li>Half-Life (любая версия)</li>
-                        <li>Windows XP/Vista/7/8/10/11</li>
-                        <li>245 МБ свободного места</li>
-                        <li>Поддержка DirectSound</li>
+                        <li>Русификатор текста</li>
+                        <li>Русификатор озвучки</li>
+                        <li>Русские шрифты</li>
+                        <li>Русификатор главного меню</li>
                       </ul>
                     </div>
                   </CardContent>
@@ -264,64 +292,73 @@ const HalfLifeRussifier = () => {
                     <div className="space-y-6">
                       <div>
                         <h3 className="text-lg font-semibold mb-4 flex items-center">
-                          <CheckCircle className="w-5 h-5 mr-2 text-primary" />
-                          Автоматическая установка (рекомендуется)
+                          <svg
+                            className="w-5 h-5 mr-2"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 48 48"
+                          >
+                            <path
+                              fill="#00b0ff"
+                              d="M20 25.026L5.011 25 5.012 37.744 20 39.818zM22 25.03L22 40.095 42.995 43 43 25.066zM20 8.256L5 10.38 5.014 23 20 23zM22 7.973L22 23 42.995 23 42.995 5z"
+                            />
+                          </svg>
+                          Windows:
                         </h3>
-                        <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
-                          <li>Скачайте установщик русификатора</li>
-                          <li>
-                            Запустите файл HalfLife_Russian_Installer.exe от
-                            имени администратора
-                          </li>
-                          <li>Выберите папку с установленной игрой</li>
-                          <li>
-                            Дождитесь завершения установки и перезапустите игру
-                          </li>
-                        </ol>
+                        <p className="text-muted-foreground">
+                          Извлеките содержимое архива в папку valve,
+                          расположенной в директории движка (где находится
+                          xash3d.exe)
+                        </p>
                       </div>
 
                       <Separator />
 
                       <div>
                         <h3 className="text-lg font-semibold mb-4 flex items-center">
-                          <AlertCircle className="w-5 h-5 mr-2 text-accent" />
-                          Ручная установка
+                          <svg
+                            className="w-5 h-5 mr-2"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 48 48"
+                          >
+                            <path
+                              fill="#30dc80"
+                              d="M24,14.088C11.427,14.088,1.108,23.716,0,36h48C46.892,23.716,36.573,14.088,24,14.088z M33.179,27.079c0-1.104,0.895-1.999,1.999-1.999c1.104,0,1.999,0.895,1.999,1.999c0,1.104-0.895,1.999-1.999,1.999	C34.074,29.078,33.179,28.183,33.179,27.079z M12.822,29.078c-1.104,0-1.999-0.895-1.999-1.999c0-1.104,0.895-1.999,1.999-1.999	s1.999,0.895,1.999,1.999C14.821,28.183,13.926,29.078,12.822,29.078z"
+                            />
+                            <path
+                              fill="#30dc80"
+                              d="M34.038,19.313c-0.14,0-0.281-0.035-0.41-0.11c-0.393-0.227-0.527-0.729-0.301-1.122l5.197-9.008	c0.227-0.394,0.729-0.529,1.122-0.301c0.393,0.227,0.527,0.729,0.301,1.122l-5.197,9.008C34.598,19.166,34.322,19.313,34.038,19.313	z"
+                            />
+                            <path
+                              fill="#30dc80"
+                              d="M13.962,19.313c-0.284,0-0.56-0.148-0.712-0.411L8.054,9.894C7.827,9.501,7.962,8.999,8.354,8.772	c0.392-0.228,0.895-0.093,1.122,0.301l5.197,9.008c0.227,0.394,0.092,0.896-0.301,1.122C14.243,19.278,14.102,19.313,13.962,19.313z"
+                            />
+                          </svg>
+                          Android:
                         </h3>
-                        <ol className="list-decimal list-inside space-y-2 text-muted-foreground">
-                          <li>
-                            Создайте резервную копию папки valve в директории
-                            игры
-                          </li>
-                          <li>Распакуйте архив HalfLife_Russian_Manual.zip</li>
-                          <li>
-                            Скопируйте содержимое в папку Half-Life/valve/
-                          </li>
-                          <li>Подтвердите замену файлов</li>
-                          <li>
-                            В свойствах игры в Steam добавьте параметр: -game
-                            valve
-                          </li>
-                        </ol>
-                      </div>
-
-                      <div className="bg-secondary/50 p-4 rounded-lg">
-                        <h4 className="font-semibold mb-2 text-accent">
-                          Важная информация:
-                        </h4>
-                        <ul className="text-sm text-muted-foreground space-y-1">
-                          <li>
-                            • Обязательно создайте резервную копию оригинальных
-                            файлов
-                          </li>
-                          <li>
-                            • Для Steam версии может потребоваться отключение
-                            проверки целостности
-                          </li>
-                          <li>
-                            • При проблемах с озвучкой проверьте настройки звука
-                            в игре
-                          </li>
-                        </ul>
+                        <div className="space-y-4">
+                          <div>
+                            <h4 className="font-semibold mb-2">
+                              Xash3D FWGS 0.21:
+                            </h4>
+                            <p className="text-muted-foreground">
+                              Извлеките содержимое архива в папку valve,
+                              расположенной в директории движка:{" "}
+                              <code className="bg-secondary/50 px-2 py-1 rounded text-foreground font-mono text-sm">
+                                Android/data/su.xash.engine.test/files
+                              </code>
+                            </p>
+                          </div>
+                          <div>
+                            <h4 className="font-semibold mb-2">
+                              Xash3D FWGS 0.19.2 и ниже:
+                            </h4>
+                            <p className="text-muted-foreground">
+                              Извлеките содержимое архива в папку valve которая
+                              находится в директории, указанной на главном
+                              экране движка.
+                            </p>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </CardContent>
@@ -384,10 +421,7 @@ const HalfLifeRussifier = () => {
 
           {/* Sidebar */}
           <div className="space-y-6">
-            {/* Real Download Stats from GitHub */}
-            <DownloadStats />
-
-            {/* Download Section */}
+            {/* Download Section with Real Stats */}
             <Card className="project-card group">
               <CardHeader>
                 <CardTitle className="flex items-center">
@@ -398,13 +432,16 @@ const HalfLifeRussifier = () => {
               <CardContent className="space-y-4">
                 <Button className="w-full gaming-glow" size="lg">
                   <Download className="w-4 h-4 mr-2" />
-                  Скачать v2.1.0
+                  Скачать v2.3
                 </Button>
                 <div className="text-center text-sm text-muted-foreground">
-                  <p>245 МБ • Обновлено 15 ноября 2024</p>
+                  <p>245 МБ • Обновлено 31 июля 2023</p>
                 </div>
               </CardContent>
             </Card>
+
+            {/* Real Download Stats */}
+            <DownloadStats />
 
             {/* Real GitHub Comments */}
             <GitHubComments projectId="half-life-russifier" />
