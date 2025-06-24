@@ -20,8 +20,53 @@ import {
   Eye,
 } from "lucide-react";
 import GitHubAuth from "@/components/GitHubAuth";
+import { githubAPI } from "@/lib/github-api";
+import { useState, useEffect } from "react";
 
 const Index = () => {
+  const [projectStats, setProjectStats] = useState<{
+    downloads: number | null;
+    fileSize: number | null;
+    loading: boolean;
+  }>({
+    downloads: null,
+    fileSize: null,
+    loading: true,
+  });
+
+  useEffect(() => {
+    loadProjectData();
+  }, []);
+
+  const loadProjectData = async () => {
+    try {
+      const stats = await githubAPI.getDownloadStats();
+      setProjectStats({
+        downloads: stats.totalDownloads || null,
+        fileSize: stats.latestFileSize || null,
+        loading: false,
+      });
+    } catch (error) {
+      console.error("Failed to load project stats:", error);
+      setProjectStats({
+        downloads: null,
+        fileSize: null,
+        loading: false,
+      });
+    }
+  };
+
+  const formatFileSize = (bytes?: number | null): string => {
+    if (!bytes) return "Н/Д";
+    const mb = bytes / (1024 * 1024);
+    return `${Math.round(mb)} МБ`;
+  };
+
+  const formatDownloads = (downloads?: number | null): string => {
+    if (!downloads) return "Н/Д";
+    return downloads.toLocaleString();
+  };
+
   const projects = [
     {
       id: 1,
@@ -29,21 +74,27 @@ const Index = () => {
       description:
         "Полный русификатор для Half-Life с переводом всех текстов, субтитров и звуковых файлов. Поддержка всех дополнений.",
       category: "Русификатор",
-      technologies: ["Localization", "Audio", "Subtitles", "GoldSrc Engine"],
-      downloads: 18750,
-      stars: 142,
+      technologies: [
+        "Локализация",
+        "Аудио",
+        "Текст",
+        "Xash3D FWGS",
+        "GoldSrc Engine",
+      ],
+      downloads: projectStats.downloads,
+      fileSize: projectStats.fileSize,
+      loading: projectStats.loading,
       image: "/placeholder.svg",
       type: "russifier",
     },
     {
       id: 2,
-      title: "YaPB Waypoints Pack",
+      title: "Графы для YaPB",
       description:
         "Коллекция waypoints для YaPB ботов на популярных картах Counter-Strike. Улучшенное поведение ботов.",
       category: "Waypoints",
       technologies: ["YaPB", "AI Navigation", "Game Logic"],
-      downloads: 8930,
-      stars: 67,
+      downloads: null,
       image: "/placeholder.svg",
       type: "waypoints",
     },
@@ -54,8 +105,7 @@ const Index = () => {
         "Инструмент для автоматической русификации игр на движке Source Engine.",
       category: "Инструмент",
       technologies: ["C++", "Source Engine", "Automation"],
-      downloads: 5240,
-      stars: 43,
+      downloads: null,
       image: "/placeholder.svg",
       type: "tool",
     },
@@ -66,54 +116,46 @@ const Index = () => {
         "Усовершенствованные waypoints с поддержкой тактических движений и командной игры для YaPB.",
       category: "Waypoints",
       technologies: ["Advanced AI", "Team Tactics", "Strategic Play"],
-      downloads: 12100,
-      stars: 95,
+      downloads: null,
       image: "/placeholder.svg",
       type: "waypoints",
     },
   ];
 
   const skills = [
-    { name: "Game Localization", icon: Languages, color: "text-primary" },
-    { name: "Bot AI Development", icon: Bot, color: "text-accent" },
-    { name: "Source Engine", icon: Code, color: "text-primary" },
-    { name: "YaPB Integration", icon: Target, color: "text-accent" },
+    { name: "Локализация игр", icon: Languages, color: "text-primary" },
+    { name: "Разработка и навигации ботов", icon: Bot, color: "text-accent" },
+    { name: "Xash3D FWGS", icon: Code, color: "text-primary" },
+    { name: "GoldSrc Engine", icon: Target, color: "text-accent" },
   ];
 
   return (
     <div className="min-h-screen bg-gradient-gaming">
       {/* Header */}
       <header className="border-b border-border/50 backdrop-blur-sm bg-background/80 sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
+        <div className="container mx-auto px-3 sm:px-4 py-3 sm:py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center gaming-glow">
-                <Gamepad2 className="w-6 h-6 text-white" />
+            <div className="flex items-center space-x-2 sm:space-x-3 min-w-0 flex-1">
+              <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center gaming-glow flex-shrink-0">
+                <Gamepad2 className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
               </div>
-              <div>
-                <h1 className="text-xl font-bold text-foreground">
+              <div className="min-w-0">
+                <h1 className="text-base sm:text-lg font-bold text-foreground truncate">
                   GameMod Studio
                 </h1>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-xs sm:text-sm text-muted-foreground hidden sm:block">
                   Русификаторы и модификации игр
                 </p>
               </div>
             </div>
-            <nav className="hidden md:flex items-center space-x-6">
-              <a
-                href="#projects"
-                className="text-foreground hover:text-primary transition-colors"
-              >
-                Проекты
-              </a>
-              <a
-                href="#about"
-                className="text-foreground hover:text-primary transition-colors"
-              >
-                О проектах
-              </a>
-              <GitHubAuth />
-            </nav>
+            <div className="flex-shrink-0">
+              <div className="hidden sm:block">
+                <GitHubAuth />
+              </div>
+              <div className="sm:hidden">
+                <GitHubAuth mobileMode={true} />
+              </div>
+            </div>
           </div>
         </div>
       </header>
@@ -122,33 +164,12 @@ const Index = () => {
       <section className="py-20 px-4 relative overflow-hidden">
         <div className="absolute inset-0 bg-grid-pattern opacity-5" />
         <div className="container mx-auto text-center relative">
-          <div className="inline-flex items-center space-x-2 bg-secondary/50 rounded-full px-4 py-2 mb-6 border border-border">
-            <div className="w-2 h-2 bg-primary rounded-full animate-pulse-gaming" />
-            <span className="text-sm text-muted-foreground">
-              Активная разработка проектов
-            </span>
-          </div>
           <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent animate-float">
             Gaming Mods
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto leading-relaxed">
-            Создаю качественные русификаторы и waypoints для YaPB ботов. Улучшаю
-            игровой опыт в Counter-Strike и других играх.
+            Создаю качественные русификаторы и графы для YaPB ботов.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button size="lg" className="gaming-glow group">
-              <Download className="w-5 h-5 mr-2 group-hover:animate-bounce" />
-              Скачать проекты
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              className="border-accent/50 hover:bg-accent hover:text-accent-foreground"
-            >
-              <Eye className="w-5 h-5 mr-2" />
-              Посмотреть демо
-            </Button>
-          </div>
         </div>
       </section>
 
@@ -179,8 +200,8 @@ const Index = () => {
           <div className="text-center mb-16">
             <h2 className="section-title text-4xl mb-4">Мои проекты</h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Коллекция русификаторов, waypoints и инструментов для улучшения
-              игрового опыта
+              ��оллекция русификаторов, вэйпоинтов/графов и инструментов для
+              улучшения игрового опыта
             </p>
           </div>
 
@@ -231,12 +252,22 @@ const Index = () => {
                     <div className="flex items-center space-x-4">
                       <div className="flex items-center space-x-1">
                         <Download className="w-4 h-4" />
-                        <span>{project.downloads.toLocaleString()}</span>
+                        <span>
+                          {project.loading
+                            ? "Загрузка..."
+                            : formatDownloads(project.downloads)}
+                        </span>
                       </div>
-                      <div className="flex items-center space-x-1">
-                        <Star className="w-4 h-4" />
-                        <span>{project.stars}</span>
-                      </div>
+                      {project.id === 1 && (
+                        <div className="flex items-center space-x-1">
+                          <span>📦</span>
+                          <span>
+                            {project.loading
+                              ? "Загрузка..."
+                              : formatFileSize(project.fileSize)}
+                          </span>
+                        </div>
+                      )}
                     </div>
                   </div>
                   <div className="flex gap-2">
@@ -293,12 +324,12 @@ const Index = () => {
                 <CardHeader>
                   <div className="flex items-center space-x-3 mb-4">
                     <Bot className="w-8 h-8 text-accent" />
-                    <CardTitle>YaPB Waypoints</CardTitle>
+                    <CardTitle>Графы для YaPB</CardTitle>
                   </div>
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground leading-relaxed">
-                    Разрабатываю waypoints для YaPB ботов в Counter-Strike. Боты
+                    Разрабатываю графы для YaPB ботов в Counter-Strike. Боты
                     получают улучшенную навигацию, тактическое поведение и более
                     реалистичную игру на различных картах.
                   </p>

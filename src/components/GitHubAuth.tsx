@@ -16,7 +16,11 @@ interface GitHubUser {
   name: string;
 }
 
-const GitHubAuth = () => {
+interface GitHubAuthProps {
+  mobileMode?: boolean;
+}
+
+const GitHubAuth = ({ mobileMode = false }: GitHubAuthProps) => {
   const [user, setUser] = useState<GitHubUser | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -62,9 +66,16 @@ const GitHubAuth = () => {
 
   if (!user) {
     return (
-      <Button variant="outline" size="sm" onClick={handleLogin}>
-        <Github className="w-4 h-4 md:mr-2" />
-        <span className="hidden md:inline">Войти через GitHub</span>
+      <Button
+        variant="outline"
+        size="sm"
+        onClick={handleLogin}
+        className={mobileMode ? "p-2" : ""}
+      >
+        <Github className={`w-4 h-4 ${mobileMode ? "mr-1" : "md:mr-2"}`} />
+        <span className={mobileMode ? "text-xs" : "hidden md:inline"}>
+          {mobileMode ? "Войти" : "Войти через GitHub"}
+        </span>
       </Button>
     );
   }

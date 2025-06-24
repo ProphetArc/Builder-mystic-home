@@ -107,7 +107,7 @@ const HalfLifeRussifier = () => {
       ),
       title: "Шрифты с поддержкой кириллицы",
       description:
-        "Поддержка отображения кириллицы в консоли и внутриигровом чате",
+        "Поддержка отображения кириллицы в кон��оли и внутриигровом чате",
     },
     {
       icon: Gamepad2,
@@ -212,7 +212,6 @@ const HalfLifeRussifier = () => {
                     <span>Обновлено: 31 июля 2023</span>
                   </div>
                   <div className="flex items-center space-x-3 sm:space-x-4 text-xs sm:text-sm">
-                    <span>Размер: 180 МБ</span>
                     <span>Лицензия: Free</span>
                   </div>
                 </div>
@@ -456,7 +455,7 @@ const HalfLifeRussifier = () => {
                   Скачать v2.3
                 </Button>
                 <div className="text-center text-xs sm:text-sm text-muted-foreground">
-                  <p>180 МБ • Обновлено 31 июля 2023</p>
+                  <p>Обновлено 31 июля 2023</p>
                 </div>
               </CardContent>
             </Card>
