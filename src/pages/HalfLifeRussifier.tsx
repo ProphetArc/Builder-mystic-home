@@ -10,7 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
 import GitHubAuth from "@/components/GitHubAuth";
-import GitHubComments from "@/components/GitHubComments";
+import ReviewsSection from "@/components/ReviewsSection";
 import DownloadStats from "@/components/DownloadStats";
 import {
   Download,
@@ -121,91 +121,98 @@ const HalfLifeRussifier = () => {
     <div className="min-h-screen bg-gradient-gaming">
       {/* Header */}
       <header className="border-b border-border/50 backdrop-blur-sm bg-background/80 sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
+        <div className="container mx-auto px-3 sm:px-4 py-3 sm:py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <Button variant="ghost" size="sm" asChild>
+            <div className="flex items-center space-x-2 sm:space-x-4 min-w-0 flex-1">
+              <Button variant="ghost" size="sm" asChild className="p-2 sm:px-3">
                 <Link to="/" className="flex items-center">
                   <ArrowLeft className="w-4 h-4 md:mr-2" />
                   <span className="hidden md:inline">Назад</span>
                 </Link>
               </Button>
-              <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center gaming-glow">
+              <div className="flex items-center space-x-2 sm:space-x-3 min-w-0">
+                <div className="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center gaming-glow flex-shrink-0">
                   <Languages className="w-4 h-4 md:w-6 md:h-6 text-white" />
                 </div>
-                <div>
-                  <h1 className="text-lg md:text-xl font-bold text-foreground">
+                <div className="min-w-0 flex-1">
+                  <h1 className="text-base sm:text-lg md:text-xl font-bold text-foreground truncate">
                     Русификатор Half-Life
                   </h1>
-                  <p className="text-sm text-muted-foreground hidden md:block">
-                    Версия 2.3 • GoldSrc Engine
-                  </p>
                 </div>
               </div>
             </div>
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2 sm:space-x-4 flex-shrink-0">
               <GitHubAuth />
-              <Button className="gaming-glow hidden md:flex">
-                <Download className="w-4 h-4 mr-2" />
-                Скачать
-              </Button>
             </div>
           </div>
         </div>
       </header>
 
-      <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-6 lg:py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-8">
             {/* Project Overview */}
             <Card className="project-card group">
-              <CardHeader>
-                <div className="flex items-start justify-between">
-                  <div>
-                    <CardTitle className="text-2xl text-foreground">
+              <CardHeader className="space-y-3 sm:space-y-0">
+                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between space-y-3 sm:space-y-0">
+                  <div className="min-w-0 flex-1">
+                    <CardTitle className="text-xl sm:text-2xl text-foreground leading-tight">
                       Русификатор Half-Life
                     </CardTitle>
-                    <CardDescription className="text-lg mt-2">
+                    <CardDescription className="text-base sm:text-lg mt-2">
                       Полный русификатор для Half-Life с переводом всех текстов,
                       субтитров и звуковых файлов. Поддержка всех дополнений.
                     </CardDescription>
                   </div>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-2 sm:flex-shrink-0">
                     <Badge variant="secondary">Русификатор</Badge>
-                    <Badge variant="outline" className="hidden md:inline-flex">
+                    <Badge variant="outline" className="hidden sm:inline-flex">
                       GoldSrc Engine
+                    </Badge>
+                    <Badge variant="outline" className="hidden sm:inline-flex">
+                      Xash3D Engine
                     </Badge>
                   </div>
                 </div>
               </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+              <CardContent className="pt-4 sm:pt-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6">
                   {features.map((feature, index) => (
-                    <div key={index} className="text-center">
-                      {typeof feature.icon === "function" ? (
-                        <div className="w-8 h-8 mx-auto mb-2 text-primary">
-                          <feature.icon />
+                    <div
+                      key={index}
+                      className="text-center sm:text-left lg:text-center p-3 sm:p-0 bg-secondary/20 sm:bg-transparent rounded-lg sm:rounded-none"
+                    >
+                      <div className="flex sm:block lg:block items-center sm:items-start lg:items-center space-x-3 sm:space-x-0 lg:space-x-0">
+                        <div className="flex-shrink-0">
+                          {typeof feature.icon === "function" ? (
+                            <div className="w-8 h-8 sm:mx-auto lg:mx-auto mb-0 sm:mb-2 lg:mb-2 text-primary">
+                              <feature.icon />
+                            </div>
+                          ) : (
+                            <feature.icon className="w-8 h-8 sm:mx-auto lg:mx-auto mb-0 sm:mb-2 lg:mb-2 text-primary flex-shrink-0" />
+                          )}
                         </div>
-                      ) : (
-                        <feature.icon className="w-8 h-8 mx-auto mb-2 text-primary" />
-                      )}
-                      <h4 className="font-semibold text-sm">{feature.title}</h4>
-                      <p className="text-xs text-muted-foreground mt-1">
-                        {feature.description}
-                      </p>
+                        <div className="min-w-0 flex-1 sm:flex-none lg:flex-none">
+                          <h4 className="font-semibold text-sm sm:text-sm">
+                            {feature.title}
+                          </h4>
+                          <p className="text-xs sm:text-xs text-muted-foreground mt-1">
+                            {feature.description}
+                          </p>
+                        </div>
+                      </div>
                     </div>
                   ))}
                 </div>
-                <Separator className="my-6" />
-                <div className="flex items-center justify-between text-sm text-muted-foreground">
+                <Separator className="my-4 sm:my-6" />
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-2 sm:space-y-0 text-sm text-muted-foreground">
                   <div className="flex items-center space-x-1">
-                    <Calendar className="w-4 h-4" />
+                    <Calendar className="w-4 h-4 flex-shrink-0" />
                     <span>Обновлено: 31 июля 2023</span>
                   </div>
-                  <div className="flex items-center space-x-4">
-                    <span>Размер: 245 МБ</span>
+                  <div className="flex items-center space-x-3 sm:space-x-4 text-xs sm:text-sm">
+                    <span>Размер: 180 МБ</span>
                     <span>Лицензия: Free</span>
                   </div>
                 </div>
@@ -214,14 +221,20 @@ const HalfLifeRussifier = () => {
 
             {/* Tabs */}
             <Tabs defaultValue="description" className="w-full">
-              <TabsList className="grid w-full grid-cols-4">
-                <TabsTrigger value="description">
-                  <FileText className="w-4 h-4 mr-2" />
-                  Описание
+              <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 h-auto">
+                <TabsTrigger
+                  value="description"
+                  className="flex-col sm:flex-row space-y-1 sm:space-y-0 sm:space-x-2 p-2 sm:p-3"
+                >
+                  <FileText className="w-4 h-4" />
+                  <span className="text-xs sm:text-sm">Описание</span>
                 </TabsTrigger>
-                <TabsTrigger value="installation">
+                <TabsTrigger
+                  value="installation"
+                  className="flex-col sm:flex-row space-y-1 sm:space-y-0 sm:space-x-2 p-2 sm:p-3"
+                >
                   <svg
-                    className="w-4 h-4 mr-2"
+                    className="w-4 h-4"
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
                     height="24"
@@ -238,15 +251,21 @@ const HalfLifeRussifier = () => {
                     <path d="M6 18h.01" />
                     <path d="M10 18h.01" />
                   </svg>
-                  Установка
+                  <span className="text-xs sm:text-sm">Установка</span>
                 </TabsTrigger>
-                <TabsTrigger value="screenshots">
-                  <ImageIcon className="w-4 h-4 mr-2" />
-                  Скриншоты
+                <TabsTrigger
+                  value="screenshots"
+                  className="flex-col sm:flex-row space-y-1 sm:space-y-0 sm:space-x-2 p-2 sm:p-3"
+                >
+                  <ImageIcon className="w-4 h-4" />
+                  <span className="text-xs sm:text-sm">Скриншоты</span>
                 </TabsTrigger>
-                <TabsTrigger value="changelog">
-                  <Clock className="w-4 h-4 mr-2" />
-                  Изменения
+                <TabsTrigger
+                  value="changelog"
+                  className="flex-col sm:flex-row space-y-1 sm:space-y-0 sm:space-x-2 p-2 sm:p-3"
+                >
+                  <Clock className="w-4 h-4" />
+                  <span className="text-xs sm:text-sm">Изменения</span>
                 </TabsTrigger>
               </TabsList>
 
@@ -293,9 +312,9 @@ const HalfLifeRussifier = () => {
                   <CardContent className="pt-6">
                     <div className="space-y-6">
                       <div>
-                        <h3 className="text-lg font-semibold mb-4 flex items-center">
+                        <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4 flex items-center">
                           <svg
-                            className="w-5 h-5 mr-2"
+                            className="w-4 h-4 sm:w-5 sm:h-5 mr-2 flex-shrink-0"
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 48 48"
                           >
@@ -316,9 +335,9 @@ const HalfLifeRussifier = () => {
                       <Separator />
 
                       <div>
-                        <h3 className="text-lg font-semibold mb-4 flex items-center">
+                        <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4 flex items-center">
                           <svg
-                            className="w-5 h-5 mr-2"
+                            className="w-4 h-4 sm:w-5 sm:h-5 mr-2 flex-shrink-0"
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 48 48"
                           >
@@ -345,7 +364,7 @@ const HalfLifeRussifier = () => {
                             <p className="text-muted-foreground">
                               Извлеките содержимое архива в папку valve,
                               расположенной в директории движка:{" "}
-                              <code className="bg-secondary/50 px-2 py-1 rounded text-foreground font-mono text-sm">
+                              <code className="bg-secondary/50 px-2 py-1 rounded text-foreground font-mono text-xs sm:text-sm break-all">
                                 Android/data/su.xash.engine.test/files
                               </code>
                             </p>
@@ -422,7 +441,7 @@ const HalfLifeRussifier = () => {
           </div>
 
           {/* Sidebar */}
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             {/* Download Section with Real Stats */}
             <Card className="project-card group">
               <CardHeader>
@@ -436,8 +455,8 @@ const HalfLifeRussifier = () => {
                   <Download className="w-4 h-4 mr-2" />
                   Скачать v2.3
                 </Button>
-                <div className="text-center text-sm text-muted-foreground">
-                  <p>245 МБ • Обновлено 31 июля 2023</p>
+                <div className="text-center text-xs sm:text-sm text-muted-foreground">
+                  <p>180 МБ • Обновлено 31 июля 2023</p>
                 </div>
               </CardContent>
             </Card>
@@ -445,8 +464,8 @@ const HalfLifeRussifier = () => {
             {/* Real Download Stats */}
             <DownloadStats />
 
-            {/* Real GitHub Comments */}
-            <GitHubComments projectId="half-life-russifier" />
+            {/* Reviews Section */}
+            <ReviewsSection projectId="half-life-russifier" />
           </div>
         </div>
       </div>
