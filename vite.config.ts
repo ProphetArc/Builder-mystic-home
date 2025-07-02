@@ -8,6 +8,7 @@ export default defineConfig(({ mode }) => ({
     host: "::",
     port: 8080,
   },
+  base: "/Builder-mystic-home/",
   plugins: [react()],
   resolve: {
     alias: {
